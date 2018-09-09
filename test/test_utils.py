@@ -17,11 +17,15 @@ class UtilsTest(unittest.TestCase):
     def test_gammaEncode(self):
         self.assertEqual(utils.gamma_encode(3), '0b101')
         self.assertEqual(utils.gamma_encode(5), '0b11001')
+        self.assertEqual(utils.gamma_encode(511), '0b11111111011111111')
         self.assertNotEqual(utils.gamma_encode(5), '0b110011')
         self.assertRaises(ValueError, utils.gamma_encode, -55)
 
     def test_gammaDecode(self):
         self.assertEqual(utils.gamma_decode('0b101'), 3)
+        self.assertEqual(utils.gamma_decode('0b100'), 2)
+        self.assertEqual(utils.gamma_decode('0b1110001'), 9)
+        self.assertEqual(utils.gamma_decode('0b11111111011111111'), 511)
         self.assertEqual(utils.gamma_decode('0b11001'), 5)
         self.assertRaises(ValueError, utils.gamma_decode, '10101010')
         self.assertRaises(ValueError, utils.gamma_decode, '55')
